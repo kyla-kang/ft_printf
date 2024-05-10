@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   print_hexa.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 21:21:33 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/09 21:23:22 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/08 16:20:46 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/09 22:43:40 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_atoi(const char *str)
+int	print_hexa(unsigned long long num, int uppercase)
 {
-	int neg;
-	int i;
-	int num;
+	char	buffer[65];
+	char	*digit;
+	char	*ptr;
 
-	i = 0;
-	neg = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-			|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (uppercase)
+		digit = "0123456789ABCDEF";
+	else
+		digit = "0123456789abcdef";
+	ptr = buffer + 64;
+	*ptr = '\0';
+	if (num == 0)
+		*(--ptr) = '0';
+	else
 	{
-		if (str[i] == '-')
-			neg *= -1;
-		i++;
+		while (num > 0)
+		{
+			*(--ptr) = digit[num % 16];
+			num /= 16;
+		}
 	}
-	while (str[i] >= '0' && str[i] <='9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	return (num * neg);
+	return (print_str(ptr));
 }

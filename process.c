@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 21:21:33 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/09 21:23:22 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/09 21:15:00 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/09 21:57:32 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_atoi(const char *str)
+int	process(const char **format, va_list *args, t_flag *flag)
 {
-	int neg;
-	int i;
-	int num;
+	const char	*p;
 
-	i = 0;
-	neg = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-			|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	p = *format;
+	while (*p)
 	{
-		if (str[i] == '-')
-			neg *= -1;
-		i++;
+		if (*p == '+' || *p == '-' || *p == '0' || *p == ' ' || *p == '#')
+			process_flag(p, flag);
+		else if (*p == '.')
+			process_precision(&p, args, flag);
+		else if (*p >= '1' && *p <= '9')
+			flag -> min_width = process_number(&p);
+		else
+		{
+			*format = p;
+			return (1);
+		}
+		p++;
 	}
-	while (str[i] >= '0' && str[i] <='9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	return (num * neg);
+	*format = p;
+	return (1);
 }

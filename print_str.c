@@ -6,7 +6,7 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:36:29 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/06 17:11:10 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:53:44 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	print_str(char *str)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	while (str[i])
+	count = 0;
+	if (!str)
+		str = "(null)";
+	while (*str)
 	{
-		write(1, &str[i], 1);
-		i++;
+		write(1, str++, 1);
+		count++;
 	}
+	return (count);
 }

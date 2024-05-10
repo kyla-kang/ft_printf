@@ -6,43 +6,48 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:49:50 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/06 16:51:55 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/09 22:47:43 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef LIBFTPRINTF_H //'LIBFFTPRINTF_H'라는 매크로가 정의되어 있지 않은 경우에만 다음 코드를 포함하도록 하는 전처리 지시문. 헤더파일이 중복으로 포함되는 것을 방지한다.
+#define LIBFTPRINTF_H //매크로 정의
 
-# include <stdarg.h>//for va_*
-# include <unistd.h>//for write
-# include <stdlib.h>//for malloc&free
+#include <stdarg.h>//for va_*
+#include <unistd.h>//for write
 
-typedef struct s_list
+typedef struct s_flag //'t_flag' 이라는 이름의 구조체 타입을 정의. ft_printf 함수의 포맷팅 옵션을 저장하고 플래그를 관리한다.
 {
-	int	sharp;
-	int	space;
-	int	plus;
-	int	minus;
-	int	minimum_width;
-	int	dot;
+	int	plus; //'+'
+	int	minus; //'-'
+	int	zero; //'0'
+	int	space; //' '
+	int	hash; //'#'
+	int	dot; //'.'
+	int	min_width; //최소 너비
 	int	precision;
-	int	offset;
-	int	zero;
-	int	zero_offset;
-}		t_list;
+}		t_flag;
 
-int	ft_printf(const char *str, ...);
+//ft_printf
+int		main(void);
+int		ft_printf(const char *str, ...);
 
-int	ft_strlen(char *str);
-int	ft_atoi(const char *str);
+//parsing
+void	init_flag(t_flag *flag);
+void	process_flag(const char *p, t_flag *flag);
+void	process_precision(const char **p, va_list *args, t_flag *flag);
 
-int	ft_putchar(char c, t_list list);
-int	ft_putstr(char *str, t_list list);
-int	ft_putnum(long lng, t_list list);
-int	ft_putptr(void *ptr, t_list list);
-int	ft_putnum_u(unsigned long lng, t_list list);
-int	ft_putnum_b(int num, int is_maj, t_list list);
+int		process(const char **format, va_list *args, t_flag *flag);
+int		process_number(const char **str);
 
-int	print_char(char c);
+//function for printing
+int		print_char(char c);
+int		print_str(char *str);
+int		print_dec(long long num);
+int		print_hexa(unsigned long long num, int uppercase);
+int		print_ptr(void *pointer);
 
-#endif
+//etc
+int		ft_atoi(const char *str);
+
+#endif // 'LIBFTPRINTF_H' 조건부 컴파일 블록을 종료한다.

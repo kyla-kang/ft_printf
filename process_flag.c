@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   process_flag.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 21:21:33 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/09 21:23:22 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/09 21:52:25 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/09 21:52:32 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int	ft_atoi(const char *str)
+void	process_flag(const char *p, t_flag *flag)
 {
-	int neg;
-	int i;
-	int num;
-
-	i = 0;
-	neg = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-			|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			neg *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <='9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	return (num * neg);
+	if (*p == '+')
+		flag -> plus = 1;
+	else if (*p == '-')
+		flag -> minus = 1;
+	else if (*p == '0')
+		flag -> zero = 1;
+	else if (*p == ' ')
+		flag -> space = 1;
+	else if (*p == '#')
+		flag -> hash = 1;
 }

@@ -1,44 +1,27 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/06 16:18:59 by kyukang           #+#    #+#              #
-#    Updated: 2024/05/06 16:23:52 by kyukang          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = libftprintf.a
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+INC_DIR = includes
 
-#ifndef	FT_PRINTF_H
-# define FT_PRINTF_H
+SOURCES = main.c ft_atoi.c ft_printf.c init_flag.c print_char.c print_str.c print_dec.c print_hexa.c print_ptr.c process.c process_flag.c process_number.c process_precision.c
+OBJECTS = $(SOURCE:.c=.o)
 
-# include <stdarg.h>//for va_*
-# include <unistd.h>//for write
-# include <stdlib.h>//for malloc&free
+%.o: %.c
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
-typedef struct s_list
-{
-	int	sharp;
-	int	space;
-	int	plus;
-	int	minus;
-	int	minimum_width;
-	int	dot;
-	int	precision;
-	int	offset;
-	int	zero;
-	int	zero_offset;
-}		t_list;
+all: $(NAME)
 
-int	ft_printf(const char *str, ...);
-int	ft_strlen(char *str);
-int	ft_atoi(const char *str, int *);
-int	)
-int	ft_putchar(char c, t_list list);
-int	ft_putstr(char *str, t_list list);
-int	ft_putptr(void *ptr, t_list list);
-int	ft_putnum(long lng, t_list list);
-int	ft_putnum_u(unsigned long lng, t_list list);
-int	ft_putnum_b(int num, int is_maj, t_list list);
+$(NAME): $(OBJECTS)
+	ar rcs $(NAME) $(OBJECTS)
 
+bonus: all
+
+clean:
+	rm -f $(OBJECTS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re bonus

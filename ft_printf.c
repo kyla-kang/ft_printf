@@ -6,76 +6,65 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:40:07 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/06 17:13:25 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/09 22:41:15 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	process_flags(t_list *list, const char *str, int *i)
+static int	handle_conversion(va_list *args, char spec)
 {
-	if (str[1] == '0')
-	{
-		list->zero_offset = ft_atoi(str + 2);
-		list -> zero = 1;
-	}
-	else if (str[1] == ' ')
-		list -> space = 1;
-	else if (str[1] == '+')
-		list -> plus = 1;
-	else if (str[1] == '-')
-	{
-		list -> offset = ft_atoi();
-		list -> minus = 1;
-	}
-	else if (str[1] == '.')
-	{
-		list -> precision = ft_atoi();
-		list -> dot = 1;
-	}
-	else if (str[1] == '#')
-		list -> sharp = 1;
+	if (spec == 'c')
+		return (print_char(va_arg(*args, int)));
+	else if (spec == 's')
+		return (print_str(va_arg(*args, char *)));
+	else if (spec == 'p')
+		return (print_ptr(va_arg(*args, void *)));
+	else if (spec == 'd' || spec == 'i')
+		return (print_dec(va_arg(*args, int)));
+	else if (spec == 'u')
+		return (print_dec(va_arg(*args, unsigned int)));
+	else if (spec == 'x')
+		return (print_hexa(va_arg(*args, unsigned int), 0));
+	else if (spec == 'X')
+		return (print_hexa(va_arg(*args, unsigned int), 1));
+	else if (spec == '%')
+		return (print_char('%'));
+	return (0);
 }
 
-int	process(const char *str, va_list *param, int *i)
+static int	handle_format(va_list args, const char *str, t_flag *flag)
 {
-	int		total;
-	t_list	list;
+	int	count;
 
-	total = 0;
-	init_list(&list);
-	while (in_set(str[*i + 1], "0123456789 +-.#"))
+	count = 0;
+	while (*str)
 	{
-		if (in_set(str[*i + 1]), " +-.#")
-			process_flags(&list, str + *i, i);
+		if (*str == '%')
+		{
+			str++;
+			init_flag(flag);
+			count += process(&str, &args, flag);
+			count += handle_conversion(&args, *str);
+		}
 		else
 		{
-			list.minimum_width = ft_atoi(str + *i + 1);
-			*i--;
+			write(1, str, 1);
+			count++;
 		}
-		*i++;
+		str++;
 	}
-	total += process_normal(str + *i, param, list);
-	*i++;
-	return (total);
+	return (count);
 }
 
 int	ft_printf(const char *str, ...)
 {
-	va_list	param;
-	int		i;
-	int		total;
+	va_list	args;
+	t_flag	flag;
+	int		count;
 
-	i = 0;
-	total = 0;
-	va_start (param, str);
-	while (str[i])
-	{
-		if (str[i] == '%')
-			total += process(str, &param, &i);
-		else
-			total += putchar(str[i]);
-	}
-	va_end(param);
-	return (total);
+	va_start(args, str);
+	count = handle_format(args, str, &flag);
+	va_end(args);
+	return (count);
 }

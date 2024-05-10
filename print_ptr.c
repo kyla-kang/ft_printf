@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_list.c                                        :+:      :+:    :+:   */
+/*   print_ptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 17:55:31 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/06 17:59:16 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/09 20:34:43 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/09 20:41:57 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	init_list(t_list *list)
+int	print_ptr(void *pointer)
 {
-	list -> sharp = 0; //
-	list -> space = 0;
-	list -> plus = 0;
-	list -> minus = 0;
-	list -> minimum_width = 0;
-	list -> dot = 0;
-	list -> precision = 0;
-	list -> zero = 0;
-	list -> zero_offset = 0;
-	list -> offset = 0;
+	unsigned long long	address;
+	char				buffer[65];
+	char				*digit;
+	char				*ptr;
+
+	address = (unsigned long long)pointer;
+	digit = "0123456789abcdef";
+	ptr = buffer + 64;
+	*ptr = '\0';
+	if (address == 0)
+		return (print_str("0x0"));
+	while (address != 0)
+	{
+		*(--ptr) = digit[address % 16];
+		address /= 16;
+	}
+	*(--ptr) = 'x';
+	*(--ptr) = '0';
+	return (print_str(ptr));
 }
