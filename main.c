@@ -6,51 +6,55 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 22:10:27 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/09 22:46:00 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/10 15:05:51 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>  // Include for printf function to compare output
-#include "libftprintf.h"  // Your header file for ft_printf
+#include <stdio.h>
+#include "libftprintf.h"
 
-int main(void)
+int	main(void)
 {
-	char *str = "Hello, world!";
-	int num = -42;
-	unsigned int unum = 42;
-	void *ptr = &num;
+	char			*str;
+	int				num;
+	unsigned int	unum;
+	void			*ptr;
 
-	// Testing %c
-	printf("%c\n", 'A');
-	ft_printf("%c\n", 'A');
+	str = "Hello, world!";
+	num = -42;
+	unum = __INT_MAX__;
+	ptr = &num;
+	printf("printf for char: %c\n", 'A');
+	ft_printf("ft_printf for char: %c\n\n", 'A');
 
-	// Testing %s
-	printf("%s\n", str);
-	ft_printf("%s\n", str);
+	printf("printf for percent: %c\n", '%');
+	ft_printf("ft_printf for percent: %c\n\n", '%');
 
-	// Testing %p
-	printf("%p\n", ptr);
-	ft_printf("%p\n", ptr);
+	printf("printf for str: %s\n", str);
+	ft_printf("ft_printf for str: %s\n\n", str);
 
-	// Testing %d and %i
-	printf("%d %i\n", num, num);
-	ft_printf("%d %i\n", num, num);
+	printf("printf for ptr: %p\n", ptr);
+	ft_printf("ft_printf for ptr: %p\n\n", ptr);
 
-	// Testing %u
-	printf("%u\n", unum);
-	ft_printf("%u\n", unum);
+	printf("printf for d: %d\n", num);
+	ft_printf("ft_printf for d: %d\n\n", num);
 
-	// Testing %x
-	printf("%x\n", unum);
-	ft_printf("%x\n", unum);
+	printf("printf for i: %i\n", num);
+	ft_printf("ft_printf for i: %i\n\n", num);
 
-	// Testing %X
-	printf("%X\n", unum);
-	ft_printf("%X\n", unum);
+	printf("printf for u: %u\n", unum);
+	ft_printf("ft_printf for u: %u\n\n", unum);
 
-	// Testing %%
-	printf("%%\n");
-	ft_printf("%%\n");
+	printf("printf for x: %x\n", num);
+	ft_printf("ft_printf for x: %x\n\n", num);
 
-	return 0;
+	printf("printf for X: %X\n", num);
+	ft_printf("ft_printf for X: %X\n\n", num);
+
+	return (0);
 }
+
+/*
+	printf("printf for d: %05d\n", num);
+	ft_printf("ft_printf for d: %05d\n\n", num);
+*/

@@ -6,25 +6,26 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:49:50 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/09 22:47:43 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/10 14:08:25 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H //'LIBFFTPRINTF_H'라는 매크로가 정의되어 있지 않은 경우에만 다음 코드를 포함하도록 하는 전처리 지시문. 헤더파일이 중복으로 포함되는 것을 방지한다.
-#define LIBFTPRINTF_H //매크로 정의
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
 
-#include <stdarg.h>//for va_*
-#include <unistd.h>//for write
+# include <stdlib.h>//for malloc & free
+# include <stdarg.h>//for va_*
+# include <unistd.h>//for write
 
-typedef struct s_flag //'t_flag' 이라는 이름의 구조체 타입을 정의. ft_printf 함수의 포맷팅 옵션을 저장하고 플래그를 관리한다.
+typedef struct s_flag
 {
-	int	plus; //'+'
-	int	minus; //'-'
-	int	zero; //'0'
-	int	space; //' '
-	int	hash; //'#'
-	int	dot; //'.'
-	int	min_width; //최소 너비
+	int	plus;
+	int	minus;
+	int	zero;
+	int	space;
+	int	hash;
+	int	dot;
+	int	min_width;
 	int	precision;
 }		t_flag;
 
@@ -50,4 +51,4 @@ int		print_ptr(void *pointer);
 //etc
 int		ft_atoi(const char *str);
 
-#endif // 'LIBFTPRINTF_H' 조건부 컴파일 블록을 종료한다.
+#endif
