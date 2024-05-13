@@ -6,7 +6,7 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 22:10:27 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/10 15:05:51 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/10 18:11:01 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ int	main(void)
 	num = -42;
 	unum = __INT_MAX__;
 	ptr = &num;
+
+	printf("printf for d: %05d\n", num);
+	ft_printf("ft_printf for d: %05d\n\n", num);
+
+	return (0);
+}
+
+/*
 	printf("printf for char: %c\n", 'A');
 	ft_printf("ft_printf for char: %c\n\n", 'A');
 
@@ -50,11 +58,4 @@ int	main(void)
 
 	printf("printf for X: %X\n", num);
 	ft_printf("ft_printf for X: %X\n\n", num);
-
-	return (0);
-}
-
-/*
-	printf("printf for d: %05d\n", num);
-	ft_printf("ft_printf for d: %05d\n\n", num);
 */

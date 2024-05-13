@@ -6,7 +6,7 @@
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:49:50 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/10 14:08:25 by kyukang          ###   ########.fr       */
+/*   Updated: 2024/05/10 18:07:46 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ typedef struct s_flag
 int		main(void);
 int		ft_printf(const char *str, ...);
 
-//parsing
 void	init_flag(t_flag *flag);
-void	process_flag(const char *p, t_flag *flag);
-void	process_precision(const char **p, va_list *args, t_flag *flag);
 
-int		process(const char **format, va_list *args, t_flag *flag);
-int		process_number(const char **str);
+int		handle_flag(const char **format, va_list *args, t_flag *flag);
+int		flag_number(const char **str);
 
-//function for printing
+void	flag_option(const char *p, t_flag *flag);
+void	flag_precision(const char **p, va_list *args, t_flag *flag);
+
+int		handle_alpha(va_list *args, char spec);
 int		print_char(char c);
 int		print_str(char *str);
 int		print_dec(long long num);
