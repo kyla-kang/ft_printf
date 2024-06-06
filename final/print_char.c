@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   print_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 14:43:18 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/23 14:43:24 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/23 14:43:56 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/23 14:43:59 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	print_char(char c)
 {
-	va_list	args;
-	int		count;
-	int		i;
-
-	count = 0;
-	i = 0;
-	va_start(args, format);
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			count += process_specifier(&args, format[i + 1]);
-			i++;
-		}
-		else
-		{
-			count += write(1, &format[i], 1);
-		}
-		i++;
-	}
-	va_end(args);
-	return (count);
+	write(1, &c, 1);
+	return (1);
 }

@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   print_dec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 14:43:18 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/23 14:43:24 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/23 14:44:09 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/23 14:44:11 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	print_dec(long long num)
 {
-	va_list	args;
-	int		count;
-	int		i;
+	long long	n;
+	int			len;
 
-	count = 0;
-	i = 0;
-	va_start(args, format);
-	while (format[i])
+	n = num;
+	len = 0;
+	if (n < 0)
 	{
-		if (format[i] == '%')
-		{
-			count += process_specifier(&args, format[i + 1]);
-			i++;
-		}
-		else
-		{
-			count += write(1, &format[i], 1);
-		}
-		i++;
+		len += write(1, "-", 1);
+		n *= -1;
 	}
-	va_end(args);
-	return (count);
+	if (n >= 10)
+	{
+		len += print_dec(n / 10);
+		len += print_dec(n % 10);
+	}
+	if (n < 10)
+		len += print_char(n + 48);
+	return (len);
 }

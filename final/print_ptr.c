@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   print_ptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyukang <kyukang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 14:43:18 by kyukang           #+#    #+#             */
-/*   Updated: 2024/05/23 14:43:24 by kyukang          ###   ########.fr       */
+/*   Created: 2024/05/23 14:44:34 by kyukang           #+#    #+#             */
+/*   Updated: 2024/05/23 14:52:58 by kyukang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	print_ptr(void *pointer)
 {
-	va_list	args;
-	int		count;
-	int		i;
+	unsigned long long	address;
+	char				buffer[65];
+	char				*digit;
+	char				*ptr;
 
-	count = 0;
-	i = 0;
-	va_start(args, format);
-	while (format[i])
+	address = (unsigned long long)pointer;
+	digit = "0123456789abcdef";
+	ptr = buffer + 64;
+	*ptr = '\0';
+	if (address == 0)
+		return (print_str("(nil)"));
+	while (address != 0)
 	{
-		if (format[i] == '%')
-		{
-			count += process_specifier(&args, format[i + 1]);
-			i++;
-		}
-		else
-		{
-			count += write(1, &format[i], 1);
-		}
-		i++;
+		*(--ptr) = digit[address % 16];
+		address /= 16;
 	}
-	va_end(args);
-	return (count);
+	*(--ptr) = 'x';
+	*(--ptr) = '0';
+	return (print_str(ptr));
 }
